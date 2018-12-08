@@ -24,4 +24,4 @@ class WaterSerializer(serializers.HyperlinkedModelSerializer):
 class ConfigSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Config
-        fields = ('value', 'date', 'place')
+        fields = ('mac', 'enabled', 'name')
