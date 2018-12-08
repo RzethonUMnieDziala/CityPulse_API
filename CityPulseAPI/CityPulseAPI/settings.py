@@ -25,7 +25,7 @@ SECRET_KEY = 'th^9uxl6e=6+q72)seiw15c(vgz(6e^(3$^f5co)wf5x5q=m=_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['192.168.0.108',]
 
 
 # Application definition
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'measurements',
-
+    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -71,6 +71,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'CityPulseAPI.wsgi.application'
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS':('django_filters.rest_framework.DjangoFilterBackend',)
+}
 
 
 # Database
