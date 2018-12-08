@@ -1,4 +1,4 @@
-from measurements.models import Temperature, Humidity, Electricity, Water, Config
+from measurements.models import Temperature, Humidity, Electricity, Water, Pollution, Config
 from rest_framework import serializers
 
 class TemperatureSerializer(serializers.HyperlinkedModelSerializer):
@@ -19,6 +19,11 @@ class ElectricitySerializer(serializers.HyperlinkedModelSerializer):
 class WaterSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Water
+        fields = ('value', 'date', 'place')
+
+class PollutionSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Pollution
         fields = ('value', 'date', 'place')
 
 class ConfigSerializer(serializers.HyperlinkedModelSerializer):

@@ -21,6 +21,11 @@ class Water(models.Model):
     date = models.DateTimeField(auto_now_add = True)
     place = models.CharField(max_length = 128)
 
+class Pollution(models.Model):
+    value = models.FloatField()
+    date = models.DateTimeField(auto_now_add = True)
+    place = models.CharField(max_length = 128)
+    
 class Config(models.Model):
     mac = models.CharField(max_length = 256)
     enabled = models.BooleanField()

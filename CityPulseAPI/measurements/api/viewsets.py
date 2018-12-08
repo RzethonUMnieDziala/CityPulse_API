@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from measurements.models import Temperature, Humidity, Electricity, Water, Config
-from .serializers import TemperatureSerializer, HumiditySerializer, ElectricitySerializer, WaterSerializer, ConfigSerializer
+from measurements.models import Temperature, Humidity, Electricity, Water, Pollution, Config
+from .serializers import TemperatureSerializer, HumiditySerializer, ElectricitySerializer, WaterSerializer, PollutionSerializer, ConfigSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django_filters import rest_framework as filters
@@ -36,6 +36,15 @@ class WaterFilter(filters.FilterSet):
     class Meta:
         model = Water
         fields = {
+            'value' :['iexact','lte','gte'],
+            'place': ['icontains'],
+            'date' : ['iexact','lte','gte'],
+        }
+
+class PollutionFilter(filters.FilterSet):
+    class Meta:
+        model = Pollution
+        fields =    {
             'value' :['iexact','lte','gte'],
             'place': ['icontains'],
             'date' : ['iexact','lte','gte'],
@@ -85,6 +94,16 @@ class WaterViewSet(viewsets.ModelViewSet):
     queryset = Water.objects.all()
     serializer_class = WaterSerializer
     filterset_class = WaterFilter
+    @action(methods=['get'], detail=False)
+    def newest(self, request):
+        newest = self.get_queryset().order_by('date').last()
+        serializer = self.get_serializer_class()(newest)
+        return Response(serializer.data)
+
+class PollutionViewSet(viewsets.ModelViewSet):
+    queryset = Pollution.objects.all()
+    serializer_class = PollutionSerializer
+    filterset_class = PollutionFilter
     @action(methods=['get'], detail=False)
     def newest(self, request):
         newest = self.get_queryset().order_by('date').last()
